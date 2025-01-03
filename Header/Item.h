@@ -12,16 +12,9 @@
 #include <ios>
 #include "User.h"
 
-using std::cin;
-using std::cout;
-using std::left;
-using std::localtime;
-using std::setw;
-using std::strftime;
-using std::string;
-using std::time_t;
-using std::tm;
-using std::vector;
+
+
+using namespace std;
 
 class Item
 {
@@ -40,6 +33,8 @@ private:
     int minBuyerRating;   // Minimum rating required for buyers to bid
     bool hasActiveBids;   // Flag indicating if there are active bids on the item
 public:
+    friend class User;
+    
     static string getCurrentDateTime()
     {
         time_t now = time(0);
