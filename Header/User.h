@@ -1,46 +1,42 @@
+// File: User.h
 #ifndef USER_H
 #define USER_H
 
 #include <string>
-#include <vector>
-#include <unordered_map>
-
-using namespace std;
+#include <iostream>
+#include <regex>
 
 class User {
-private:
-    string username;
-    string password;
-    string fullName;
-    string phoneNumber;
-    string email;
-    string idType;
-    string idNumber;
-    float rating;
+protected:
+    std::string username;
+    std::string password;
+    std::string fullName;
+    std::string phone;
+    std::string email;
+    std::string idType; // Citizen ID or Passport
+    std::string idNumber;
     int creditPoints;
-
-    static unordered_map<string, User> users; // Stores all registered users (username -> User)
-
-    // Helper functions
-    static bool isValidPassword(const string& password); // Strong password validation
-    static bool isUsernameTaken(const string& username);
+    float rating; // Average rating
 
 public:
-    // Constructor
-    User(const string& username, const string& password, const string& fullName,
-         const string& phoneNumber, const string& email, const string& idType, const string& idNumber);
+    User();
+    User(const std::string &username, const std::string &password, const std::string &fullName,
+         const std::string &phone, const std::string &email, const std::string &idType, const std::string &idNumber);
 
-    // Static functions for login and signup
-    static bool signup(const string& username, const string& password, const string& fullName,
-                       const string& phoneNumber, const string& email, const string& idType, const string& idNumber);
+    // Accessors and Mutators
+    std::string getUsername() const;
+    void setUsername(const std::string &username);
+    
+    std::string getPassword() const;
+    void setPassword(const std::string &password);
 
-    static User* login(const string& username, const string& password);
+    void updateProfile(const std::string &newPhone, const std::string &newEmail);
+    void topUpCredits(int amount);
 
-    // Getters for user details
-    string getUsername() const;
-    string getFullName() const;
-    float getRating() const;
-    int getCreditPoints() const;
+    static bool validatePassword(const std::string &password);
+    void displayProfile() const;
+
+    virtual ~User();
 };
 
-#endif
+#endif // USER_H

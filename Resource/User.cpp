@@ -1,72 +1,43 @@
+// File: User.cpp
 #include "User.h"
-#include <iostream>
-#include <regex>
 
-// Initialize the static map
-unordered_map<string, User> User::users;
+User::User() : creditPoints(0), rating(3.0) {}
 
-// Constructor
-User::User(const string& username, const string& password, const string& fullName,
-           const string& phoneNumber, const string& email, const string& idType, const string& idNumber)
-    : username(username), password(password), fullName(fullName), phoneNumber(phoneNumber),
-      email(email), idType(idType), idNumber(idNumber), rating(3.0), creditPoints(0) {}
+User::User(const std::string &username, const std::string &password, const std::string &fullName,
+           const std::string &phone, const std::string &email, const std::string &idType, const std::string &idNumber)
+    : username(username), password(password), fullName(fullName), phone(phone), email(email), idType(idType), idNumber(idNumber), creditPoints(0), rating(3.0) {}
 
-// Helper: Validate strong password
-bool User::isValidPassword(const string& password) {
-    // Strong password: Minimum 8 characters, at least one uppercase letter, one digit, and one special character
-    regex passwordPattern("^(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-    return regex_match(password, passwordPattern);
+std::string User::getUsername() const { return username; }
+void User::setUsername(const std::string &username) { this->username = username; }
+
+std::string User::getPassword() const { return password; }
+void User::setPassword(const std::string &password) { this->password = password; }
+
+void User::updateProfile(const std::string &newPhone, const std::string &newEmail) {
+    phone = newPhone;
+    email = newEmail;
 }
 
-// Helper: Check if username is taken
-bool User::isUsernameTaken(const string& username) {
-    return users.find(username) != users.end();
-}
-
-// Signup function
-bool User::signup(const string& username, const string& password, const string& fullName,
-                  const string& phoneNumber, const string& email, const string& idType, const string& idNumber) {
-    if (isUsernameTaken(username)) {
-        cout << "Error: Username is already taken.\n";
-        return false;
+void User::topUpCredits(int amount) {
+    if (amount > 0) {
+        creditPoints += amount;
+        std::cout << "Credits topped up by " << amount << ". Total: " << creditPoints << "\n";
+    } else {
+        std::cout << "Invalid top-up amount.\n";
     }
-
-    if (!isValidPassword(password)) {
-        cout << "Error: Password must be at least 8 characters long, with one uppercase letter, one digit, and one special character.\n";
-        return false;
-    }
-
-    // Add the user to the system
-    users[username] = User(username, password, fullName, phoneNumber, email, idType, idNumber);
-    cout << "Signup successful! Welcome, " << fullName << "!\n";
-    return true;
 }
 
-// Login function
-User* User::login(const string& username, const string& password) {
-    auto it = users.find(username);
-    if (it != users.end() && it->second.password == password) {
-        cout << "Login successful! Welcome back, " << it->second.fullName << "!\n";
-        return &it->second; // Return a pointer to the logged-in user
-    }
-
-    cout << "Error: Invalid username or password.\n";
-    return nullptr;
+bool User::validatePassword(const std::string &password) {
+    return password.length() >= 8 && std::regex_search(password, std::regex("[!@#$%^&*]"));
 }
 
-// Getters
-string User::getUsername() const {
-    return username;
+void User::displayProfile() const {
+    std::cout << "Username: " << username << "\n"
+              << "Full Name: " << fullName << "\n"
+              << "Phone: " << phone << "\n"
+              << "Email: " << email << "\n"
+              << "Credit Points: " << creditPoints << "\n"
+              << "Rating: " << rating << "\n";
 }
 
-string User::getFullName() const {
-    return fullName;
-}
-
-float User::getRating() const {
-    return rating;
-}
-
-int User::getCreditPoints() const {
-    return creditPoints;
-}
+User::~User() {}

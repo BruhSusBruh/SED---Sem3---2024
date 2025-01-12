@@ -1,34 +1,27 @@
+// File: Seller.h
 #ifndef SELLER_H
 #define SELLER_H
 
-#include <string>
+#include "User.h"
 #include <vector>
-#include "ItemListing.h"
+#include <string>
 
-using namespace std;
-
-class Seller {
+class Seller : public User {
 private:
-    string username;
-    string fullName;
-    vector<ItemListing> listings;
+    std::vector<std::string> activeListings;
 
 public:
-    Seller(const string& username, const string& fullName);
+    Seller();
+    Seller(const std::string &username, const std::string &password, const std::string &fullName,
+           const std::string &phone, const std::string &email, const std::string &idType, const std::string &idNumber);
 
-    // Function declarations
-    void createListing(const string& itemName, const string& category,
-                       const string& description, int startBid, int bidIncrement, 
-                       const string& endTime, float minBuyerRating);
+    void createListing(const std::string &itemName);
+    void editListing(const std::string &itemName, const std::string &newDetails);
+    void deleteListing(const std::string &itemName);
 
-    void editListing(int listingID, const string& newDescription, int newStartBid,
-                     int newBidIncrement, const string& newEndTime, float newMinBuyerRating);
+    void displayListings() const;
 
-    void removeListing(int listingID);
-
-    void finalizeAuction(int listingID);
-
-    void viewListings() const; // Optional: For viewing all listings of the seller
+    virtual ~Seller();
 };
 
 #endif
