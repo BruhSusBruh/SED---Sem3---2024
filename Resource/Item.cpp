@@ -1,5 +1,5 @@
-// File: Item.cpp
-#include "Item.h"
+#include <iostream>
+#include "../Header/Item.h"
 
 Item::Item(const std::string &name, const std::string &category, const std::string &description,
            double startingBid, double bidIncrement, int minBuyerRating,

@@ -1,6 +1,6 @@
-
-// File: Seller.cpp
-#include "Seller.h"
+#include <iostream>
+#include <algorithm> // For std::find and std::remove
+#include "../Header/Seller.h"
 
 Seller::Seller() {}
 
@@ -40,4 +40,5 @@ void Seller::displayListings() const {
     }
 }
 
+// Destructor definition
 Seller::~Seller() {}

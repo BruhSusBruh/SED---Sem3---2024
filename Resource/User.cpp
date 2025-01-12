@@ -1,4 +1,7 @@
 // File: User.cpp
+#include <iostream>
+#include <regex>
+#include "../Header/User.h"
 #include "User.h"
 
 User::User() : creditPoints(0), rating(3.0) {}
